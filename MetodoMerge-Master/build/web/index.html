@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>METODO DE MARGE</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <script>
+          var n;
+          var a;
+          var U;
+		  var t;
+		  var b;
+		  var arr;
+		  var R;
+	   function calcularSel() {
+                x = document.getElementById("n");
+                N = x.value;
+                U = (N/(N*0.1));
+                a = new Array(N);
+
+                for (i=0;i<N;i++) {
+                    a[i] = N-i;
+                }
+                c = 0;
+                c+=3;
+                for (i=0;i<N-1;i++) {
+                    c+=3;
+                    min = i;
+                    c++; c+=3;
+                    for (j=i+1;j<N;j++) {
+                        c+=6;
+                        if (a[j]<a[min]) {
+                           min = j;
+                        }
+                    }
+                    aux = a[i];
+                    a[i] = a[min];
+                    a[min] = aux;
+                    c+=7;
+                }
+                x = document.getElementById("c0");
+                x.innerHTML = "Seleccion Número de pasos por contador " + c;
+                Formula = 3*Math.pow(N,2)+(11*N)-11;
+                x = document.getElementById("F0");
+                x.innerHTML = "Seleccion Número de pasos con formula: " + Formula;
+            }
+               function calcularBur(){
+            x = document.getElementById("n");
+            N= x.value;
+            U = (N/(N*0.1));
+            a = new Array(N);
+            d=0;
+            d++;
+            for(i = 0; i< N-1; i++){
+                d= d+3;
+                d= d+2;
+                for(j= i+1; j<N; j++){
+                    d= d+12;
+                    if(a[i]> a[j]){
+                        cont= a[i];
+                        a[i]= a[j];
+                        a[j]= cont;
+                        
+                    }
+                }
+                d= d+1;
+            }
+            d= d+2;
+            x = document.getElementById("c1");
+            x.innerHTML = "Burbuja Contador = " + d;
+            formula = 6*(N*N)-3;
+            x= document.getElementById("F1");
+            x.innerHTML = "Burbuja Formula = " + formula;
+        
+        }	 
+            function calcular() {
+                x = document.getElementById("n");
+                n = x.value;
+                U = (n/(n*0.1));
+					a = new Array();
+				b=new Array();
+				arr=new Array();
+				//movim=2
+                for (i = 0; i < n ; i++){
+				//movim+=6
+					arr[i]=Math.floor((Math.random() * 10) + 1);
+				}
+				//------------
+				marge(0,n-1,arr)
+				//movim+=10
+				
+				//mezclar(a,b,arr,c)
+				Formula = -26+(39*n)+(6*n)*Math.log2(n);
+				
+				//x = document.getElementById("c");
+				//x.innerHTML = "Conteo: " + movim;
+                
+                x = document.getElementById("F");
+                x.innerHTML = "Merge Formula: " + Formula;
+            }
+			
+			function marge(	izq,der,arr){
+			x = document.getElementById("n");
+			 movim=0
+				//------------
+				movim+=10
+				if(arr.length<2){
+				movim+=3
+					if(arr[0]>arr[1]){
+					movim+=7
+						t=arr[0];
+						arr[0]=arr[1];
+						arr[1]=t;
+					}
+					 x = document.getElementById("c");
+					x.innerHTML = "Merge Conteo: " + movim;
+					return ;
+				}
+				der= n;
+				izq=0;
+				movim+=6
+				m=(der-izq)/2;
+				for(i=m;i<arr.length;i++){
+				movim+=5
+					a[i]=arr[i];
+				}
+				movim+=3
+				for(i=m; i<a.length ; i++){
+					movim+=7
+					b[i-m]=a[i];
+				}
+				movim=movim*2.0
+				  x = document.getElementById("c");
+				  x.innerHTML = "Merge Conteo: " + movim;
+				
+
+			}
+			
+			
+	
+			
+			function mezclar (a,b,arr,c){ 
+				R=new Array();
+				J=0
+				k=0
+				while(i<a.length && J<b.length){
+					if(a[i]<=b[J]){
+						R[k]=a[i];
+						k++;
+						i++;
+					}else{
+						R[k]=b[J];
+						k++;
+						J++;
+					}
+				}
+				if(i<a.length){
+					while(i<a.length){
+						R[k]=a[i];
+						i++;
+						k++;
+					}
+				}else{
+					while(J<b.length){
+						R[k]=b[J];
+						k++;
+						J++;
+					}
+				}
+				
+				
+			}
+			
+           function obtenerCoor(w) {
+				N=w
+				
+				//c=Math.pow(N,2)
+				c=70-(68*N)+39*N*Math.log(N);
+				//c=-26+(39*N)+(6*N)*Math.log2(N);
+			
+				return c
+            }
+			
+			
+           function obtenerCoor2(w) {
+				p=w;
+				c=6*p*p-3;
+               return c;
+            }
+			
+			
+           function obtenerCoor3(w) {
+                N = w;
+                
+                c=3*Math.pow(N,2)+(11*N)-11;
+               
+               return c;
+            }
+			
+           function graficar(){
+		   //GRAFICAMOS MERGE
+            	var canvas = document.getElementById("canvasGrafica");
+            	var lapiz = canvas.getContext("2d");
+            	lapiz.fillStyle = "#FF0000";
+            	lapiz.fillStyle = "#FFF";
+            	//lapiz.fillRect(0,0,canvas.width,canvas.height);
+            	//lapiz.strokeRect(0,0,canvas.width,canvas.height);
+                lapiz.fillStyle = "#CDCDCD";
+                lapiz.beginPath();
+            	lapiz.moveTo(0,canvas.height);
+              var x =canvas.width/U;
+                for (var i = 1; canvas.height-obtenerCoor(i) > -5000; i++) {
+	            lapiz.lineTo(i*x,canvas.height-obtenerCoor(i));
+            	lapiz.moveTo(i*x,canvas.height-obtenerCoor(i));
+                lapiz.strokeStyle="gray";
+            	lapiz.stroke();
+                };
+			//GRAFICAMOS BURBUJA	
+				lapiz.fillStyle = "#FF4";
+            	//lapiz.fillRect(0,0,canvas.width,canvas.height);
+            	//lapiz.strokeRect(0,0,canvas.width,canvas.height);
+                lapiz.fillStyle = "#022000";
+                lapiz.beginPath();
+            	lapiz.moveTo(0,canvas.height);
+              var x =canvas.width/U;
+                for (var i = 0.1; canvas.height-obtenerCoor2(i) > -5000; i++) {
+	            lapiz.lineTo(i*x,canvas.height-obtenerCoor2(i));
+            	lapiz.moveTo(i*x,canvas.height-obtenerCoor2(i));
+                lapiz.strokeStyle="blue";
+            	lapiz.stroke();
+                };
+				//GRAFICAMOS SELECCION
+				//lapiz.fillStyle = "#FAA";
+            	//lapiz.fillRect(0,0,canvas.width,canvas.height);
+            	//lapiz.strokeRect(0,0,canvas.width,canvas.height);
+                lapiz.fillStyle = "#66CC66";
+                lapiz.beginPath();
+            	lapiz.moveTo(0,canvas.height);
+              var x =canvas.width/U;
+                for (var i = 0.1; canvas.height-obtenerCoor3(i) > -5000; i++) {
+	            lapiz.lineTo(i*x,canvas.height-obtenerCoor3(i));
+            	lapiz.moveTo(i*x,canvas.height-obtenerCoor3(i));
+                lapiz.strokeStyle="green";
+            	lapiz.stroke();
+                };
+				
+                //eje y
+                lapiz.beginPath();//Pongo el lapiz
+                lapiz.lineWidth=2;
+                lapiz.strokeStyle="black";
+                lapiz.moveTo(40,0);
+                lapiz.lineTo(40,400);
+                lapiz.stroke();
+                lapiz.closePath();
+                //eje x
+                lapiz.beginPath();//Pongo el lapiz
+                lapiz.lineWidth=2;
+                lapiz.strokeStyle="black";
+                lapiz.moveTo(0,400);
+                lapiz.lineTo(300,400);
+                lapiz.stroke();
+                lapiz.closePath();
+                texto="Y"; //texto de prueba
+                lapiz.beginPath() //iniciar ruta
+                lapiz.strokeStyle="blue"; //color externo
+                lapiz.fillStyle="red"; //color de relleno
+                lapiz.font="bold 15px arial"; //estilo de texto
+                lapiz.strokeText(texto,43,12); //texto con los dos métodos
+                lapiz.fillText(texto,43,12);
+                texto="X";
+                lapiz.beginPath()
+                lapiz.strokeStyle="blue"; //color externo
+                lapiz.fillStyle="red"; //color de relleno
+                lapiz.font="bold 15px arial"; //estilo de texto
+                lapiz.strokeText(texto,285,390); //texto con los dos métodos
+                lapiz.fillText(texto,285,390);
+            }
+        </script>
+    </head>
+
+    <body>
+    Método de MARGE,BURBUJA Y SELECCION
+      <br></br>
+        <input id="n" type="text">
+        <input type="button" value="Calcular" onclick="calcular();  calcularBur(); calcularSel();   graficar();">
+        <div id="c0"></div>
+        <div id="F0"></div>
+        <div id="c1"></div>
+        <div id="F1"></div>
+        <div id="c"></div>
+        <div id="F"></div>
+   
+        <canvas id="canvasGrafica" width="500" height="400">
+        </canvas>
+    </body>
+
+</html>
